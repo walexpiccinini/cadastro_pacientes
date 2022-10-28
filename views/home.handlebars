@@ -1,0 +1,184 @@
+<h1>SGC-Sistema de Gestão de Clinica(Odonto)</h1>
+<!--Máscaras-->
+<script>
+  $(document).ready(function(){
+    var options = {
+      translation: {
+       '0' : {pattern: /[0-9]/},
+       '9' : {pattern: /[0-9]/},
+       'a' : {pattern: /[a-zA-ZÀ-ú ']/},
+       'w' : {pattern: /[x0-9]/}
+      }
+    }
+
+    $("#cpf").mask("999.999.999-99",options)
+    $("#tel").mask("(99)9.9999-9999",options)
+    $("#nasc").mask("99/99/9999",options)
+    $("#rg").mask("999.999.999-w",options,{reverse: true})
+    $("#nome").mask("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",options)
+    $("#profissao").mask("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",options)
+  })
+</script>
+
+  <form action="/home" method="POST"> 
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input type="text" name="nome" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-info">Buscar Paciente</button>
+    </div>
+  </form>
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Cadastrar Paciente
+  </button>
+
+  <a href="/logout"><button class="btn btn-danger">Sair</button></a>
+ <hr>
+ 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Cadastrar Paciente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/cadastrar" method="post">
+            <input type="text" name="id" value="0" hidden>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" class="form-control" required>
+            <label for="tel">Celular:</label>
+            <input type="tel" name="tel" id="tel" class="form-control" required>
+            
+            <label for="rg">RG.:</label>
+            <input type="text" name="rg" id="rg" class="form-control" required>
+            
+            <label for="cpf">CPF.:</label>
+            <input type="text" name="cpf" id="cpf" class="form-control" required>
+            <label for="nasc">Data de Nascimento:</label>
+            <input type="text" name="nasc" id="nasc" class="form-control" required>
+            <label for="sexo">Sexo:</label>
+            <select name="sexo" id="sexo" class="form-control" required>
+              <option value=""></option>
+              <option value="MASCULINO">MASCULINO</option>
+              <option value="FEMININO">FEMININO</option>
+            </select>
+            <label for="naturalidade">Naturalidade:</label>
+            <input type="text" name="naturalidade" class="form-control" required>
+            <label for="uf">UF.:</label>
+            <select name="uf" id="uf" class="form-control">
+                  <option value="GO">GO</option>
+                  <option value="AC">AC</option>
+                  <option value="AL">AL</option>
+                  <option value="AM">AM</option>
+                  <option value="AP">AP</option>
+                  <option value="BA">BA</option>
+                  <option value="CE">CE</option>
+                  <option value="DF">DF</option>
+                  <option value="ES">ES</option>
+                  <option value="GO">GO</option>
+                  <option value="MA">MA</option>
+                  <option value="MG">MG</option>
+                  <option value="MS">MS</option>
+                  <option value="MT">MT</option>
+                  <option value="PA">PA</option>
+                  <option value="PB">PB</option>
+                  <option value="PE">PE</option>
+                  <option value="PI">PI</option>
+                  <option value="PR">PR</option>
+                  <option value="RJ">RJ</option>
+                  <option value="RN">RN</option>
+                  <option value="RO">RO</option>
+                  <option value="RR">RR</option>
+                  <option value="RS">RS</option>
+                  <option value="SC">SC</option>
+                  <option value="SE">SE</option>
+                  <option value="SP">SP</option>
+                  <option value="TO">TO</option>
+            </select>
+            
+          <label for="profissao">Profissão:</label>
+          <input type="text" name="profissao" id="profissao" class="form-control" required>
+          <label for="endereco">Endereço:</label>
+          <input type="text" name="endereco" id="endereco" class="form-control" required>
+          <button type="submit" class="btn btn-success mt-3">Salvar</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--RESULTADOS-->
+<table class="table table-hover table-striped table-sm">
+  <thead>
+    <tr>
+      <th>AÇÃO</th>
+      <th>CONTROLE</th>
+      <th>NOME</th>
+      <th>TELEFONE</th>
+      <th>RG</th>
+      <th>CPF</th>
+      <th>NASCIMENTO</th>
+      <th>SEXO</th>
+      <th>NATURALIDADE</th>
+      <th>UF</th>
+      <th>PROFISSÃO</th>
+      <th>ENDEREÇO</th>
+    </tr>
+  </thead>
+{{#if data}}
+  {{#data}}
+  <tbody>
+    <tr>
+      <td>
+        <a href="update/{{id}}"><img src="/img/edit.png" alt=""></a>
+        <img src="/img/trash.png" alt="" class="mt-3" data-toggle="modal" data-target="#ID_{{id}}">
+      </td>
+      <td>{{id}}</td>
+      <td>{{nome}}</td>
+      <td>{{telefone1}}</td>
+      <td>{{rg}}</td>
+      <td>{{cpf}}</td>
+      <td>{{dnascimento}}</td>
+      <td>{{sexo}}</td>
+      <td>{{naturalidade}}</td>
+      <td>{{nuf}}</td>
+      <td>{{profissao}}</td>
+      <td>{{errua}}</td>
+    </tr>
+  </tbody>
+  <!--Modal confirmação-->
+    <div class="modal fade" id="ID_{{id}}" tabindex="-1" role="dialog" aria-labelledby="ID_{{id}}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ID_{{id}}">{{nome}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h1>Realmente deseja excluir este dado?</h1><br><hr>
+            <a href="deletar/{{id}}"><button class="btn btn-success">SIM</button></a>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">NÃO</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/data}}
+</table>
+{{else}}
+<div class="alert alert-danger">Nenhum resultado para essa pesquisa</div>
+{{/if}}

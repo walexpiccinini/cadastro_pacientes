@@ -1,0 +1,33 @@
+<div class="card">
+    <h1>Editar dados de: <small>{{nome}}</small></h1>
+    <script>
+      $(document).ready(function(){
+        var options = {
+          translation: {
+            '0' : {pattern: /[0-9]/},
+            '9' : {pattern: /[0-9]/},
+            'a' : {pattern: /[a-zA-ZÀ-ú ']/},
+            'w' : {pattern: /[x0-9]/}
+          }
+      }
+    $("#tel").mask("(99)9.9999-9999",options)
+    $("#nasc").mask("99/99/9999",options)
+    $("#nome").mask("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",options)
+    $("#profissao").mask("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",options)
+  })
+    </script>
+    <div class="card-body">
+        <form action="/update" method="post">
+            <input type="text" name="id" value="{{id}}" class="form-control" hidden>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" class="form-control" value="{{nome}}" required>
+            <label for="tel">Celular:</label>
+            <input type="tel" name="tel" id="tel" class="form-control" value="{{telefone}}" required>            
+          <label for="profissao">Profissão:</label>
+          <input type="text" name="profissao" id="profissao" class="form-control" value="{{profissao}}" required>
+          <label for="endereco">Endereço:</label>
+          <input type="text" name="endereco" id="endereco" class="form-control" value="{{endereco}}" required>
+          <button type="submit" class="btn btn-success mt-3">Salvar</button>
+        </form>
+    </div>
+</div>
