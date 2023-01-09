@@ -11,8 +11,14 @@ namespace cadastro_pacientes.Models {
         [Column("NOME")]
         public string? Nome {get; set;}
 
+        [Column("USUARIO")]
+        public string? Usuario {get; set;}
+
         [Column("SENHA")]
         public string? Senha {get; set;}
+
+        [Column("ROLE")]
+        public string? Role {get; set;}
 
     }
 }
